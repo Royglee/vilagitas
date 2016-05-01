@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+    <title>Világítás Szabályozás</title>
+    <link rel='stylesheet' href='/public/styles/vilagitas.css' />
+    <link rel='stylesheet' href='/public/styles/rangeSlider.css' />
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/public/scripts/jquery-1.12.3.min.js"></script>
+    <script src="/public/scripts/vilagitas.js"></script>
+    <script src="/public/scripts/rangeSlider.min.js"></script>
+</head>
+<body>
+    <div id="container">
+        <div class="chat">
+            <ul id="messages"></ul>
+        </div>
+        <form action="">
+            <input id="m" autocomplete="off" /><button>Send</button>
+        </form>
+
+        <div id="slider">
+            <h2>Fényerősség</h2>
+            <input id="inputRange" type="range" min="0" max="255" data-rangeSlider>
+            <output></output>
+            <input id="change_input" type="number" value="10">
+            <button>Change value</button>
+        </div>
+    </div>
+</body>
+</div>
+
+</html>
