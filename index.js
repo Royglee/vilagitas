@@ -2,7 +2,18 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var mqtt = require('mqtt');
 var currentValue = 0;
+
+var client  = mqtt.connect('mqtt://vm.ik.bme.hu:19540');
+client.on('connect', function () {
+    client.subscribe('Arduino');
+});
+
+client.on('message', function (topic, message) {
+    // message is Buffer
+    io.emit(topic +": " + message.toString());
+});
 
 app.use("/public", express.static(__dirname + '/public'));
 app.get('/', function(req, res){
@@ -24,6 +35,7 @@ io.on('connection', function(socket){
 
     socket.on('sliderChange', function(msg){
         socket.broadcast.emit('sliderChange', msg);
+        client.publish('sliderChange', msg.toString());
         currentValue = msg;
         console.log(msg);
     });
