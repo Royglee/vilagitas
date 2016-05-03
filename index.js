@@ -11,7 +11,7 @@ client.on('connect', function () {
 });
 
 client.on('message', function (topic, message) {
-    // message is Buffer
+    if(topic=="Arduino"){client.publish('sliderChange', currentValue.toString());}
     io.emit("chat message",topic +": " + message.toString());
 });
 
@@ -41,6 +41,7 @@ io.on('connection', function(socket){
     });
 });
 
+//http.listen(3000,"10.9.0.231",function(){
 http.listen(80, function(){
     console.log('listening on *:80');
 });
