@@ -1,5 +1,5 @@
 var mqtt    = require('mqtt');
-var client  = mqtt.connect('mqtt://localhost');
+var client  = mqtt.connect('mqtt://vm.ik.bme.hu:19540');
 
 client.on('connect', function () {
     client.subscribe('presence');

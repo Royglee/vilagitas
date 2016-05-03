@@ -8,7 +8,7 @@ form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 
 #messages li:nth-child(odd) { background: #eee; }
 
 .chat{
-    height:300px;
+    height:150px;
     overflow: scroll;
     overflow-x: hidden;
 }
@@ -25,4 +25,8 @@ form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 
 
 #slider h2{
     margin-bottom: 10px;
+}
+
+.demo-placeholder{
+    height:300px;
 }

@@ -11,6 +11,9 @@ $( document ).ready(function() {
         myDiv.animate({ scrollTop: myDiv[0].scrollHeight}, 100);
 
     });
+    socket.on('Arduino/Sensor1', function(data){
+        lastData = data;
+    });
 
     (function () {
 

@@ -8,11 +8,19 @@ var currentValue = 0;
 var client  = mqtt.connect('mqtt://vm.ik.bme.hu:19540');
 client.on('connect', function () {
     client.subscribe('Arduino');
+    client.subscribe('Arduino/Sensor1');
 });
 
 client.on('message', function (topic, message) {
-    if(topic=="Arduino"){client.publish('sliderChange', currentValue.toString());}
-    io.emit("chat message",topic +": " + message.toString());
+    if(topic=="Arduino"){
+        client.publish('sliderChange', currentValue.toString());
+        io.emit("chat message",topic +": " + message.toString());
+    }
+    if(topic=="Arduino/Sensor1"){
+        io.emit("Arduino/Sensor1", message.toString());
+    }
+
+
 });
 
 app.use("/public", express.static(__dirname + '/public'));
