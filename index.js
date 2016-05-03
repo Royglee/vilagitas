@@ -12,7 +12,7 @@ client.on('connect', function () {
 
 client.on('message', function (topic, message) {
     // message is Buffer
-    io.emit(topic +": " + message.toString());
+    io.emit("chat message",topic +": " + message.toString());
 });
 
 app.use("/public", express.static(__dirname + '/public'));
