@@ -2,14 +2,14 @@
 <html>
 <head>
     <title>Világítás Szabályozás</title>
-    <link rel='stylesheet' href='/public/styles/vilagitas.css' />
-    <link rel='stylesheet' href='/public/styles/rangeSlider.css' />
-    <script src="/socket.io/socket.io.js"></script>
     <script src="/public/scripts/jquery-1.12.3.min.js"></script>
-    <script src="/public/scripts/vilagitas.js"></script>
-    <script src="/public/scripts/rangeSlider.min.js"></script>
+    <link rel='stylesheet' href='/public/styles/vilagitas.css' />
+    <link rel='stylesheet' href='/public/styles/rangeslider.css' />
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/public/scripts/rangeslider.min.js"></script>
     <script src="/public/scripts/jquery.flot.js"></script>
     <script src="/public/scripts/plot.js"></script>
+    <script src="/public/scripts/vilagitas.js"></script>
 </head>
 <body>
     <div id="container">
@@ -19,16 +19,28 @@
         <form action="">
             <input id="m" autocomplete="off" /><button>Send</button>
         </form>
-        <div id="placeholder" class="demo-placeholder"></div>
-        <div id="slider">
-            <h2>Fényerősség</h2>
-            <input id="inputRange" type="range" min="0" max="255" data-rangeSlider>
-            <output></output>
-            <input id="change_input" type="number" value="10">
-            <button>Change value</button>
+        <div class="graphcont">
+            <h2>Érzékelő 1 (<span class="lastData0"></span>)</h2>
+            <div id="graph0" class="graph"></div>
         </div>
-    </div>
+        <div class="graphcont">
+            <h2>Érzékelő 2 (<span class="lastData1"></span>)</h2>
+            <div id="graph1" class="graph"></div>
+        </div>
+
+        <div id="slider">
+            <div class="fcont">
+                <h2>Fényerősség 1. csoport</h2>
+                <input type="range" id="feny-range-0" value="0" min="0" max="255">
+                <input type="number" id="feny-input-0" class="rangeInput" value="0" min="0" max="255">
+            </div>
+            <div class="fcont">
+                <h2>Fényerősség 2. csoport</h2>
+                <input type="range" id="feny-range-1" value="0" min="0" max="255">
+                <input type="number" id="feny-input-1" class="rangeInput" value="0" min="0" max="255">
+            </div>
+        </div>
 </body>
-</div>
+
 
 </html>

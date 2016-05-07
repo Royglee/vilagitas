@@ -24,6 +24,23 @@ server.on('clientConnected', function(client) {
     console.log('client connected', client.id);
 });
 
+server.on('clientDisconnected', function(client) {
+    console.log('Client Disconnected:', client.id);
+    if(client.id="arduinoClient"){
+        var message = {
+            topic: 'Arduino/Disconnected',
+            payload: 'Arduino Disconnected', // or a Buffer
+            qos: 0, // 0, 1, or 2
+            retain: false // or true
+        };
+
+        server.publish(message, function() {
+            //console.log('done!');
+        });
+    }
+
+});
+
 // fired when a message is received
 server.on('published', function(packet, client) {
     console.log('Published', packet.payload);
