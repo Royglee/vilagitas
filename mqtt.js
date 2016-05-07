@@ -26,7 +26,7 @@ server.on('clientConnected', function(client) {
 
 server.on('clientDisconnected', function(client) {
     console.log('Client Disconnected:', client.id);
-    if(client.id="arduinoClient"){
+    if(client.id=="arduinoClient"){
         var message = {
             topic: 'Arduino/Disconnected',
             payload: 'Arduino Disconnected', // or a Buffer
