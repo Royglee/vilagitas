@@ -43,7 +43,7 @@ server.on('clientDisconnected', function(client) {
 
 // fired when a message is received
 server.on('published', function(packet, client) {
-    console.log('Published', packet.payload);
+    console.log('Published',packet.topic, packet.payload.toString());
 });
 
 // fired when the mqtt server is ready
