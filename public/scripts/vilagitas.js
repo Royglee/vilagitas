@@ -1,6 +1,5 @@
 $( document ).ready(function() {
     var socket = io();
-
     $('form').submit(function(){
         socket.emit('chat message', $('#m').val());
         $('#m').val('');
@@ -20,7 +19,7 @@ $( document ).ready(function() {
 //---------SLIDER-----------------------------
     var $rangeslider =  $('#slider input[type=range]');
     var $amount = $('#slider input[type=number]');
-
+    var prevAm = [];
     $rangeslider
         .rangeslider({
             polyfill: false,
@@ -29,7 +28,11 @@ $( document ).ready(function() {
                 var $id = $idArray[$idArray.length-1];
 
                 $('#feny-input-'+$id).val(value);
-                socket.emit("Arduino/Feny",{value:value,id:$id});
+
+                if (prevAm[$id] != value) {
+                    socket.emit("Arduino/Feny", {value: value, id: $id});
+                    prevAm[$id] = value;
+                }
             }
         })
 
