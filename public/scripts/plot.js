@@ -9,11 +9,11 @@ $(function() {
     function insertLastData(dataSet) {
         if (data[dataSet].length > 0)
             data[dataSet] = data[dataSet].slice(1);
-        // Do a random walk
+
         while (data[dataSet].length < totalPoints) {
             data[dataSet].push(lastData[dataSet]);
         }
-        // Zip the generated y values with the x values
+
         var res = [];
         for (var i = 0; i < data[dataSet].length; ++i) {
             res.push([i, data[dataSet][i]])

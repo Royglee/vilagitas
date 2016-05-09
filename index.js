@@ -51,7 +51,7 @@ app.get('/', function(req, res){
 
 //---Websocket szerver---------------------------------------
 io.on('connection', function(socket){
-    console.log('a user connected');
+    console.log('A user connected, IP:',socket.client.conn.remoteAddress);
     for (var i = 0; i < currentValue.length; i++) {
         var $this=currentValue[i];
         if($this != undefined && $this != null){socket.emit('Arduino/Feny', $this)};
@@ -64,7 +64,7 @@ io.on('connection', function(socket){
     }
 
     socket.on('disconnect', function(){
-        console.log('user disconnected');
+        console.log('A user disconnected, IP:',socket.client.conn.remoteAddress);
     });
 
     socket.on('chat message', function(msg){
