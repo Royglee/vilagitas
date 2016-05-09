@@ -46,8 +46,7 @@ function setup() {
 }
 
 function timeStamp() {
-   var  myDate = new Date().now();
-
+    var  myDate = new Date();
     return(myDate.getHours() + ":" + myDate.getMinutes() + ":" + myDate.getSeconds());
 
 }
