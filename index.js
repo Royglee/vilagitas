@@ -64,7 +64,7 @@ io.on('connection', function(socket){
     }
 
     socket.on('disconnect', function(){
-        console.log('A user disconnected, IP:',socket.client.conn.remoteAddress);
+        console.log(timeStamp(),'A user disconnected, IP:',socket.client.conn.remoteAddress);
     });
 
     socket.on('chat message', function(msg){
