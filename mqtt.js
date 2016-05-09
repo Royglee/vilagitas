@@ -27,13 +27,7 @@ server.on('clientConnected', function(client) {
 server.on('clientDisconnected', function(client) {
     console.log('Client Disconnected:', client.id);
     if(client.id=="arduinoClient"){
-        var message = {
-            topic: 'Arduino/Disconnected',
-            payload: 'Arduino Disconnected', // or a Buffer
-            qos: 0, // 0, 1, or 2
-            retain: false // or true
-        };
-
+        var message = {topic: 'Arduino/Disconnected', payload: 'Disconnected', qos: 0, retain: false};
         server.publish(message, function() {
             //console.log('done!');
         });
@@ -43,10 +37,17 @@ server.on('clientDisconnected', function(client) {
 
 // fired when a message is received
 server.on('published', function(packet, client) {
-    console.log('Published',packet.topic, packet.payload.toString());
+    console.log(timeStamp()+' Published:',packet.topic, packet.payload.toString());
 });
 
 // fired when the mqtt server is ready
 function setup() {
     console.log('Mosca server is up and running')
+}
+
+function timeStamp() {
+   var  myDate = new Date().now();
+
+    return(myDate.getHours() + ":" + myDate.getMinutes() + ":" + myDate.getSeconds());
+
 }
