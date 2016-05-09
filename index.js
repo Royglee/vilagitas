@@ -51,7 +51,7 @@ app.get('/', function(req, res){
 
 //---Websocket szerver---------------------------------------
 io.on('connection', function(socket){
-    console.log('A user connected, IP:',socket.client.conn.remoteAddress);
+    console.log(timeStamp(),'A user connected, IP:',socket.client.conn.remoteAddress);
     for (var i = 0; i < currentValue.length; i++) {
         var $this=currentValue[i];
         if($this != undefined && $this != null){socket.emit('Arduino/Feny', $this)};
@@ -79,6 +79,11 @@ io.on('connection', function(socket){
     });
 });
 
+function timeStamp() {
+    var myDate = new Date();
+    return ("["+myDate.getHours() + ":" + myDate.getMinutes() + ":" + myDate.getSeconds()+"]");
+
+}
 
 http.listen(process.env.HTTP_LISTEN_PORT,process.env.HTTP_LISTEN_IP, function(){
     console.log('listening on '+process.env.HTTP_LISTEN_IP+':'+process.env.HTTP_LISTEN_PORT);
