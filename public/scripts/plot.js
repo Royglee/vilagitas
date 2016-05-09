@@ -24,12 +24,12 @@ $(function() {
     var updateInterval = 30;
     var plot0 = $.plot("#graph0", [ insertLastData(0) ], {
         series: {shadowSize: 0},
-        yaxis: {min: 400, max: 1023},
+        yaxis: {min: 100, max: 1050},
         xaxis: {show: true}
     });
     var plot1= $.plot("#graph1", [ insertLastData(1) ], {
         series: {shadowSize: 0},
-        yaxis: {min: 400, max: 1023},
+        yaxis: {min: 100, max: 1050},
         xaxis: {show: true}
     });
     function update() {
