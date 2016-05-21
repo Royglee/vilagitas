@@ -8,8 +8,8 @@ $(function() {
     lastData[3]=0; //alapjel2
     lastData[4]=0; //h1
     lastData[5]=0; //h2
-    lastData[6]=42; //b1
-    lastData[7]=100; //b2
+    lastData[6]=0; //b1
+    lastData[7]=0; //b2
 
     var data = [[],[],[],[],[],[],[],[]],
         totalPoints = 1000;
