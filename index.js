@@ -33,6 +33,9 @@ client.on('message', function (topic, message) {
                 client.publish('Arduino/Feny'+$this.id, $this.value.toString());
             };
         }
+
+        //Arduinonak a Mode:
+        client.publish('Arduino/Mode', mode.toString());
     }
     if(topic=="Arduino/Disconnected"){
         io.emit("chat message","Arduino: " + message.toString());
