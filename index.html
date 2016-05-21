@@ -9,39 +9,50 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/public/scripts/rangeslider.min.js"></script>
     <script src="/public/scripts/jquery.flot.js"></script>
-    <script src="/public/scripts/plot.js"></script>
     <script src="/public/scripts/vilagitas.js"></script>
+    <script src="/public/scripts/plot.js"></script>
 </head>
 <body>
 <div id="container">
-    <div class="chat">
-        <ul id="messages"></ul>
+    <div id="chatCont">
+        <div class="chat">
+            <ul id="messages"></ul>
+        </div>
+        <form action="">
+            <input id="m" autocomplete="off"/>
+            <button>Send</button>
+        </form>
     </div>
-    <form action="">
-        <input id="m" autocomplete="off"/>
-        <button>Send</button>
-    </form>
+    <div id="modeSwitchCont">
+        <button id="autoButton">Auto</button>
+        <button id="manualButton">Manual</button>
+    </div>
     <div class="graphcont">
-        <h2>Érzékelő 1 (<span class="lastData0"></span>)</h2>
 
         <div id="graph0" class="graph"></div>
+
+        <div id="graph_hiba1" class="graph"></div>
+
+        <div id="graph_beavatkozo1" class="graph"></div>
     </div>
     <div class="graphcont">
-        <h2>Érzékelő 2 (<span class="lastData1"></span>)</h2>
 
         <div id="graph1" class="graph"></div>
-    </div>
 
+        <div id="graph_hiba2" class="graph"></div>
+
+        <div id="graph_beavatkozo2" class="graph"></div>
+    </div>
     <div id="slider">
         <div class="fcont">
             <h2>Fényerősség 1. csoport</h2>
-            <input type="range" id="feny-range-1" value="0" min="0" max="255">
-            <input type="number" id="feny-input-1" class="rangeInput" value="0" min="0" max="255">
+            <input type="range" id="feny-range-0" value="0" min="0" max="255">
+            <input type="number" id="feny-input-0" class="rangeInput" value="0" min="0" max="255">
         </div>
         <div class="fcont">
             <h2>Fényerősség 2. csoport</h2>
-            <input type="range" id="feny-range-0" value="0" min="0" max="255">
-            <input type="number" id="feny-input-0" class="rangeInput" value="0" min="0" max="255">
+            <input type="range" id="feny-range-1" value="0" min="0" max="255">
+            <input type="number" id="feny-input-1" class="rangeInput" value="0" min="0" max="255">
         </div>
     </div>
 </div>

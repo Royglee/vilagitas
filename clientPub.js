@@ -4,10 +4,15 @@ var client  = mqtt.connect('mqtt://vm.ik.bme.hu:19540');
 client.on('connect', function () {
     var rand;
     setInterval(function(){
-        rand = Math.floor(Math.random() * 600) + 400;
+        rand = Math.floor(Math.random() * 255) +0;
         client.publish('Arduino/Sensor0', rand.toString(), {retain: false, qa: 1});
-        rand = Math.floor(Math.random() * 600) + 400;
+        rand = Math.floor(Math.random() * 255) + 0;
         client.publish('Arduino/Sensor1', rand.toString(), {retain: false, qa: 1});
+
+        rand = Math.floor(Math.random() * 255) +0;
+        client.publish('Arduino/Beavatkozo0', rand.toString(), {retain: false, qa: 1});
+        rand = Math.floor(Math.random() * 255) + 0;
+        client.publish('Arduino/Beavatkozo1', rand.toString(), {retain: false, qa: 1});
     }, 500);
 
     //client.end();

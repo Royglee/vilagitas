@@ -7,6 +7,7 @@ var mqtt = require('mqtt');
 
 var currentValue = [];
 var lastSensorData = [];
+var mode  = 0; //0-manual 1-auto
 
 var client  = mqtt.connect(process.env.MQTT_SERVER);
 
@@ -15,6 +16,8 @@ client.on('connect', function () {
     client.subscribe('Arduino/Disconnected');
     client.subscribe('Arduino/Sensor0');
     client.subscribe('Arduino/Sensor1');
+    client.subscribe('Arduino/Beavatkozo0');
+    client.subscribe('Arduino/Beavatkozo1');
 });
 
 //----MQTT Client--------------------------------------------
@@ -39,6 +42,12 @@ client.on('message', function (topic, message) {
         io.emit("Arduino/Sensor", {data:message.toString(),id:topic.slice(-1)});
         lastSensorData[topic.slice(-1)] = message.toString();
     }
+    if(topic=="Arduino/Beavatkozo1" || topic=="Arduino/Beavatkozo0"){
+        //console.log(message.toString());
+        var id=parseInt(topic.slice(-1))+6;
+        io.emit("Arduino/Sensor", {data:message.toString(),id:id});
+        lastSensorData[id] = message.toString();
+    }
 
 
 });
@@ -52,6 +61,7 @@ app.get('/', function(req, res){
 //---Websocket szerver---------------------------------------
 io.on('connection', function(socket){
     console.log(timeStamp(),'A user connected, IP:',socket.client.conn.remoteAddress);
+
     for (var i = 0; i < currentValue.length; i++) {
         var $this=currentValue[i];
         if($this != undefined && $this != null){socket.emit('Arduino/Feny', $this)};
@@ -59,9 +69,12 @@ io.on('connection', function(socket){
     for (var i = 0; i < lastSensorData.length; i++) {
         var $this=lastSensorData[i];
         if($this != undefined && $this != null) {
-            io.emit("Arduino/Sensor", {data: lastSensorData[i], id: i});
+            var event = {data: lastSensorData[i], id: i}
+            socket.emit("Arduino/Sensor", event);
+            //console.log(event);
         }
     }
+    socket.emit('Arduino/Mode', mode);
 
     socket.on('disconnect', function(){
         console.log(timeStamp(),'A user disconnected, IP:',socket.client.conn.remoteAddress);
@@ -76,6 +89,12 @@ io.on('connection', function(socket){
         socket.broadcast.emit('Arduino/Feny', msg);
         client.publish('Arduino/Feny'+msg.id, msg.value.toString());
         currentValue[msg.id] = msg;
+    });
+
+    socket.on('Arduino/Mode', function(msg){
+        io.emit('Arduino/Mode', msg);
+        client.publish('Arduino/Mode', msg.toString());
+        mode = msg;
     });
 });
 
