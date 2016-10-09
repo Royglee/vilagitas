@@ -2,7 +2,9 @@ var mqtt    = require('mqtt');
 var client  = mqtt.connect('mqtt://vm.ik.bme.hu:19540');
 
 client.on('connect', function () {
-    client.subscribe('presence');
+    client.subscribe('Arduino/Feny0');
+    client.subscribe('Arduino/Feny1');
+    client.subscribe('Arduino/Mode');
 
     client.on('message', function (topic, message) {
         console.log(topic +": " + message.toString());
