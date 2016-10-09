@@ -20,6 +20,7 @@ client.on('connect', function () {
     client.subscribe('Arduino/Beavatkozo1');
     client.subscribe('Arduino/Feny0');
     client.subscribe('Arduino/Feny1');
+    client.subscribe('Arduino/Mode');
 });
 
 //----MQTT Client--------------------------------------------
