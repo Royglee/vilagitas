@@ -57,7 +57,7 @@ client.on('message', function (topic, message) {
     if(topic=="Arduino/Feny1" || topic=="Arduino/Feny0"){
         //console.log(message.toString());
         var id=parseInt(topic.slice(-1));
-        io.emit("Arduino/Sensor", {value:message.toString(),id:id});
+        io.emit("Arduino/Feny", {value:message.toString(),id:id});
         currentValue[id] =  {value:message.toString(),id:id};
     }
     if(topic=="Arduino/Mode"){
