@@ -78,7 +78,7 @@ client.on('message', function (topic, message) {
 
         //A lejárt kulcsok kitörlése a tömbbõl
             for(var i = tokens.length-1; i>=0; i--) {
-                if(now - tokens[i][1] >  10000) {
+                if(now - tokens[i][1] >  1000*60) {
                     tokens.splice(i, 1);
                 }
             }
@@ -157,6 +157,9 @@ io.on('connection', function(socket){
     socket.on('Auth/Token', function(msg){
         var token = msg.toString();
         socket['SWAuthToken'] = token;
+	//console.log(token);
+	//console.log(tokens);
+	//console.log(isTokenValid(token));
         if(!isTokenValid(token)){
             socket.emit('Auth/tokenStatus', "INVALID");
         } else{
@@ -173,10 +176,14 @@ function timeStamp() {
 }
 
 function isTokenValid(token){
+	var isValid = false;
     tokens.forEach(function(value, index){
-        if(value[0] == token) return true;
+	console.log(value[0],token);
+        if(value[0].toString() == token.toString()) {
+		console.log("match");
+		isValid =  true;}
     });
-    return false;
+    return isValid;
 }
 
 http.listen(process.env.HTTP_LISTEN_PORT,process.env.HTTP_LISTEN_IP, function(){
