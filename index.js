@@ -18,6 +18,8 @@ client.on('connect', function () {
     client.subscribe('Arduino/Sensor1');
     client.subscribe('Arduino/Beavatkozo0');
     client.subscribe('Arduino/Beavatkozo1');
+    client.subscribe('Arduino/Feny0');
+    client.subscribe('Arduino/Feny1');
 });
 
 //----MQTT Client--------------------------------------------
@@ -50,6 +52,16 @@ client.on('message', function (topic, message) {
         var id=parseInt(topic.slice(-1))+6;
         io.emit("Arduino/Sensor", {data:message.toString(),id:id});
         lastSensorData[id] = message.toString();
+    }
+    if(topic=="Arduino/Feny1" || topic=="Arduino/Feny0"){
+        //console.log(message.toString());
+        var id=parseInt(topic.slice(-1));
+        io.emit("Arduino/Sensor", {value:message.toString(),id:id});
+        currentValue[id] =  {value:message.toString(),id:id};
+    }
+    if(topic=="Arduino/Mode"){
+        io.emit("Arduino/Mode", message.toString());
+        mode = message.toString();
     }
 
 
