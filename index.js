@@ -8,6 +8,7 @@ var mqtt = require('mqtt');
 var currentValue = [];
 var lastSensorData = [];
 var mode  = 0; //0-manual 1-auto
+var consumeFeny = new Date().getTime();
 
 var client  = mqtt.connect(process.env.MQTT_SERVER);
 
@@ -36,7 +37,6 @@ client.on('message', function (topic, message) {
                 client.publish('Arduino/Feny'+$this.id, $this.value.toString());
             };
         }
-
         //Arduinonak a Mode:
         client.publish('Arduino/Mode', mode.toString());
     }
@@ -55,10 +55,13 @@ client.on('message', function (topic, message) {
         lastSensorData[id] = message.toString();
     }
     if(topic=="Arduino/Feny1" || topic=="Arduino/Feny0"){
-        //console.log(message.toString());
-        var id=parseInt(topic.slice(-1));
-        io.emit("Arduino/Feny", {value:message.toString(),id:id});
-        currentValue[id] =  {value:message.toString(),id:id};
+        var now = Date.now();
+        if(now-consumeFeny > 30){ //Ha az elõzõ általunk küldött üzenet óta eltelt legalább 30ms akkor dolgozzuk csak fel
+            //console.log(message.toString());
+            var id=parseInt(topic.slice(-1));
+            io.emit("Arduino/Feny", {value:message.toString(),id:id});
+            currentValue[id] =  {value:message.toString(),id:id};
+        }
     }
     if(topic=="Arduino/Mode"){
         io.emit("Arduino/Mode", message.toString());
@@ -105,6 +108,7 @@ io.on('connection', function(socket){
         socket.broadcast.emit('Arduino/Feny', msg);
         client.publish('Arduino/Feny'+msg.id, msg.value.toString());
         currentValue[msg.id] = msg;
+        consumeFeny = Date.now();
     });
 
     socket.on('Arduino/Mode', function(msg){
