@@ -8,7 +8,9 @@ var mqtt = require('mqtt');
 var currentValue = [];
 var lastSensorData = [];
 var mode  = 0; //0-manual 1-auto
+
 var consumeFeny = new Date().getTime();
+var tokens = [];
 
 var client  = mqtt.connect(process.env.MQTT_SERVER);
 
@@ -22,6 +24,7 @@ client.on('connect', function () {
     client.subscribe('Arduino/Feny0');
     client.subscribe('Arduino/Feny1');
     client.subscribe('Arduino/Mode');
+    client.subscribe('Auth/newToken');
 });
 
 //----MQTT Client--------------------------------------------
@@ -68,6 +71,19 @@ client.on('message', function (topic, message) {
         mode = message.toString();
     }
 
+    if(topic=="Auth/newToken"){
+        now = Date.now();
+        //Az érkezett azonosító kulcs mentése az aktuális idõbélyeggel
+        tokens.push([message.toString(),now]);
+
+        //A lejárt kulcsok kitörlése a tömbbõl
+            for(var i = tokens.length-1; i>=0; i--) {
+                if(now - tokens[i][1] >  10000) {
+                    tokens.splice(i, 1);
+                }
+            }
+    }
+
 
 });
 
@@ -94,6 +110,7 @@ io.on('connection', function(socket){
         }
     }
     socket.emit('Arduino/Mode', mode);
+    socket.emit('Auth/tokenRequest', "Send your auth token to Auth/Token");
 
     socket.on('disconnect', function(){
         console.log(timeStamp(),'A user disconnected, IP:',socket.client.conn.remoteAddress);
@@ -105,16 +122,47 @@ io.on('connection', function(socket){
     });
 
     socket.on('Arduino/Feny', function(msg){
+        if (typeof socket['SWAuthToken'] !== 'undefined') {
+            if(!isTokenValid(socket['SWAuthToken'])){
+                socket.emit('Auth/tokenStatus', "INVALID");
+                console.log('invalid token');
+                return;
+            }
+        } else {
+            socket.emit('Auth/tokenRequest', "Token was not provided.");
+        }
+
         socket.broadcast.emit('Arduino/Feny', msg);
         client.publish('Arduino/Feny'+msg.id, msg.value.toString());
         currentValue[msg.id] = msg;
         consumeFeny = Date.now();
+
     });
 
     socket.on('Arduino/Mode', function(msg){
+        if (typeof socket['SWAuthToken'] !== 'undefined') {
+            if(!isTokenValid(socket['SWAuthToken'])){
+                socket.emit('Auth/tokenStatus', "INVALID");
+                console.log('invalid token');
+                return;
+            }
+        } else {
+            socket.emit('Auth/tokenRequest', "Token was not provided.");
+        }
         io.emit('Arduino/Mode', msg);
         client.publish('Arduino/Mode', msg.toString());
         mode = msg;
+    });
+
+    socket.on('Auth/Token', function(msg){
+        var token = msg.toString();
+        socket['SWAuthToken'] = token;
+        if(!isTokenValid(token)){
+            socket.emit('Auth/tokenStatus', "INVALID");
+        } else{
+            socket.emit('Auth/tokenStatus', "VALID");
+        }
+
     });
 });
 
@@ -122,6 +170,13 @@ function timeStamp() {
     var myDate = new Date();
     return ("["+myDate.getHours() + ":" + myDate.getMinutes() + ":" + myDate.getSeconds()+"]");
 
+}
+
+function isTokenValid(token){
+    tokens.forEach(function(value, index){
+        if(value[0] == token) return true;
+    });
+    return false;
 }
 
 http.listen(process.env.HTTP_LISTEN_PORT,process.env.HTTP_LISTEN_IP, function(){
