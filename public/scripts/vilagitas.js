@@ -99,22 +99,22 @@ $( document ).ready(function() {
             "count":"3",
             "states":[
                 {
-                    "mode":array["mode[0]"],
-                    "output":array["value[0]"],
-                    "name":array["name[0]"],
-                    "active":array["active[0]"]
+                    "mode":array[0],
+                    "output":array[1],
+                    "name":array[2],
+                    "active":array[3]
                 },
                 {
-                    "mode":array["mode[1]"],
-                    "output":array["value[1]"],
-                    "name":array["name[1]"],
-                    "active":array["active[1]"]
+                    "mode":array[4],
+                    "output":array[5],
+                    "name":array[6],
+                    "active":array[7]
                 },
                 {
-                    "mode":array["mode[2]"],
-                    "output":array["value[2]"],
-                    "name":array["name[2]"],
-                    "active":array["active[2]"]
+                    "mode":array[8],
+                    "output":array[9],
+                    "name":array[10],
+                    "active":array[11]
                 }
             ]
         };
