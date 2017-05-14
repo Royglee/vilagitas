@@ -117,7 +117,8 @@ $( document ).ready(function() {
                     "active":array[11].value
                 }
             ]
-        }
+        };
+        console.log(states);
 
     });
 
