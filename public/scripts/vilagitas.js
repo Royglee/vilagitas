@@ -95,12 +95,29 @@ $( document ).ready(function() {
     $("#submit").click(function(){
         var states = {}
         var array = $( "#SWForm" ).serializeArray();
-        $.each( array, function( key, value ) {
-            var name=value.name.split(".")[0];
-            var index=value.name.split(".")[1];
-
-            states.states[index][name] = value.value;
-        });
+        var states = {
+            "count":"3",
+            "states":[
+                {
+                    "mode":array["mode[0]"].value,
+                    "output":array["value[0]"].value,
+                    "name":array["name[0]"].value,
+                    "active":array["active[0]"].value
+                },
+                {
+                    "mode":array["mode[1]"].value,
+                    "output":array["value[1]"].value,
+                    "name":array["name[1]"].value,
+                    "active":array["active[1]"].value
+                },
+                {
+                    "mode":array["mode[2]"].value,
+                    "output":array["value[2]"].value,
+                    "name":array["name[2]"].value,
+                    "active":array["active[2]"].value
+                }
+            ]
+        };
         console.log(states);
 
     });
