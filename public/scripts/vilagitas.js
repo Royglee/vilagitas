@@ -49,7 +49,7 @@ $( document ).ready(function() {
     socket.on('Switch/States', function(msg){
         $.each( msg.states, function( key, value ) {
             $.each( value, function( k, v ) {
-                $("name["+k+"."+key+"]").val(v);
+                $(".inputs[name='"+k+"."+key+"']").val(v);
             });
         });
     });
