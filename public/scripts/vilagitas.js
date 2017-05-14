@@ -93,7 +93,7 @@ $( document ).ready(function() {
 
 
     $("#submit").click(function(){
-        console.log($( "#SWForm" ).serialize());
+        console.log($( "#SWForm" ).serializeArray());
     });
 
 });
