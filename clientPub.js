@@ -40,7 +40,7 @@ client.on('connect', function () {
         client.publish("Switch/States", JSON.stringify(states));
         //client.publish("Switch/States", "");
         //client.publish("Arduino/Feny0", "0");
-        console.log(addslashes(JSON.stringify(states)));
+        console.log(JSON.stringify(states));
 
     }, 1000);
 
