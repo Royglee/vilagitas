@@ -68,5 +68,10 @@ button:active, button:focus{
 }
 
 #SWForm .inputs{
-    width: 25%;
+    width: 24%;
+    border: 0;
+    padding: 5px;
+    display: inline-block;
+    margin: 0 2px;
+
 }
