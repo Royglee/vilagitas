@@ -25,6 +25,13 @@ client.on('connect', function () {
                 "name":"Dynamic3",
                 "active":"true"
             }
+            ,
+            {
+                "mode":"0",
+                "output":"100",
+                "name":"Dynamic5",
+                "active":"true"
+            }
         ]
     }
     setInterval(function(){

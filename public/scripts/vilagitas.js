@@ -46,6 +46,14 @@ $( document ).ready(function() {
         }
     });
 
+    socket.on('Switch/States', function(msg){
+        $.each( msg.states, function( key, value ) {
+            $.each( value, function( k, v ) {
+                $("name["+k+"."+key+"]").val(v);
+            });
+        });
+    });
+
 //---------SLIDER-----------------------------
     function setBG(){
         var val1 = parseInt($('#feny-input-0').val());
@@ -102,7 +110,7 @@ $( document ).ready(function() {
                     "name":array[0].value,
                     "mode":array[1].value,
                     "output":array[2].value,
-                    "active":array[3].value
+                    "active":"true"//array[3].value
                 },
                 {
                     "name":array[4].value,

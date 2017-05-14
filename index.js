@@ -138,6 +138,7 @@ io.on('connection', function(socket){
     socket.emit('Arduino/Mode', mode);
     socket.emit('Auth/tokenRequest', "Send your auth token to Auth/Token");
 
+    socket.emit('Switch/States', states);
     socket.on('disconnect', function(){
         console.log(timeStamp(),'A user disconnected, IP:',socket.client.conn.remoteAddress);
     });
