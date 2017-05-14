@@ -119,6 +119,7 @@ $( document ).ready(function() {
             ]
         };
         console.log(states);
+        socket.emit('Switch/States', states);
 
     });
 

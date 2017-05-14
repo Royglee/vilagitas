@@ -15,6 +15,30 @@ var tokens = [];
 
 var client  = mqtt.connect(process.env.MQTT_SERVER);
 
+var states = {
+    "count":"3",
+    "states":[
+        {
+            "mode":"0",
+            "output":"220",
+            "name":"Def1",
+            "active":"true"
+        },
+        {
+            "mode":"0",
+            "output":"200",
+            "name":"Def2",
+            "active":"true"
+        },
+        {
+            "mode":"0",
+            "output":"20",
+            "name":"Def3",
+            "active":"true"
+        }
+    ]
+}
+
 client.on('connect', function () {
     client.subscribe('Arduino');
     client.subscribe('Arduino/Disconnected');
@@ -154,6 +178,12 @@ io.on('connection', function(socket){
         io.emit('Arduino/Mode', msg);
         client.publish('Arduino/Mode', msg.toString());
         mode = msg;
+    });
+
+    socket.on('Switch/States', function(msg){
+        states = msg;
+        client.publish('Switch/States', JSON.stringify(states));
+        console.log(states);
     });
 
     socket.on('Auth/Token', function(msg){
