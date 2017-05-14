@@ -93,7 +93,33 @@ $( document ).ready(function() {
 
 
     $("#submit").click(function(){
-        console.log($( "#SWForm" ).serializeArray());
+        var array = $( "#SWForm" ).serializeArray();
+
+        var states = {
+            "count":"3",
+            "states":[
+                {
+                    "mode":array["mode[0]"],
+                    "output":array["value[0]"],
+                    "name":array["name[0]"],
+                    "active":array["active[0]"]
+                },
+                {
+                    "mode":array["mode[1]"],
+                    "output":array["value[1]"],
+                    "name":array["name[1]"],
+                    "active":array["active[1]"]
+                },
+                {
+                    "mode":array["mode[2]"],
+                    "output":array["value[2]"],
+                    "name":array["name[2]"],
+                    "active":array["active[2]"]
+                }
+            ]
+        };
+        console.log(states);
+
     });
 
 });
