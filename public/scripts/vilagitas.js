@@ -99,22 +99,22 @@ $( document ).ready(function() {
             "count":"3",
             "states":[
                 {
-                    "mode":array["mode.0"].value,
-                    "output":array["value.0"].value,
-                    "name":array["name.0"].value,
-                    "active":array["active.0"].value
+                    "mode":array["mode.0"],
+                    "output":array["value.0"],
+                    "name":array["name.0"],
+                    "active":array["active.0"]
                 },
                 {
-                    "mode":array["mode.1"].value,
-                    "output":array["value.1"].value,
-                    "name":array["name.1"].value,
-                    "active":array["active.1"].value
+                    "mode":array["mode.1"],
+                    "output":array["value.1"],
+                    "name":array["name.1"],
+                    "active":array["active.1"]
                 },
                 {
-                    "mode":array["mode.2"].value,
-                    "output":array["value.2"].value,
-                    "name":array["name.2"].value,
-                    "active":array["active.2"].value
+                    "mode":array["mode.2"],
+                    "output":array["value.2"],
+                    "name":array["name.2"],
+                    "active":array["active.2"]
                 }
             ]
         };
