@@ -66,3 +66,7 @@ button:active, button:focus{
     width:49%;
     display: inline-block;
 }
+
+#SWForm .inputs{
+    width: 25%;
+}
